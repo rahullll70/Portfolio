@@ -26,17 +26,17 @@ body {
 
 @font-face {
   font-family: 'montserrat';
-  src: url(/public/font/Montserrat-Bold.woff2) format('woff2');
+  src: url(/font/Montserrat-Bold.woff2) format('woff2');
 }
 
 @font-face {
   font-family: 'anton';
-  src: url(/public/font/anton.ttf) format('truetype');
+  src: url(/font/anton.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'rothefight';
-  src: url(/public/font/ROTHEFIGHT.otf) format('opentype');
+  src: url(/font/ROTHEFIGHT.otf) format('opentype');
 }
 
 @theme {

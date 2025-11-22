@@ -10,6 +10,7 @@ import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/all';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { tr } from 'motion/react-client';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,6 +142,117 @@ const Home = () => {
     };
   }, [showLoader]);
 
+  // --- GSAP WORK SECTION  ---
+  useEffect(() => {
+    gsap.set('#work-text', { y: 50, opacity: 0 });
+    gsap.set('#featured-text', { y: -100, opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#work-heading',
+        start: 'top 80%',
+        end: 'top 10%',
+        scrub: 2,
+      },
+    });
+
+    tl.to('#featured-text', {
+      y: 0,
+      opacity: 1,
+      duration: 2,
+      ease: 'power2.inOut',
+      delay: 0.1,
+    }).to('#work-text', {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'power1.inOut',
+      delay: 0.5,
+    });
+  });
+
+  // --- GSAP WORK SECTION PROJECT ANIMATION  ---
+  useEffect(() => {
+    gsap.set('#project-features', { height: '0' });
+    gsap.set('#project-text', { y: 100, opacity: 0 });
+   
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#project-features',
+        scrub: 2,
+      },
+    });
+    tl.to('#project-features', {
+      scale: 1,
+      height: '100%',
+      width: '100%',
+      duration: 1,
+      ease: 'power2.out',
+      delay: 0.1,
+    }),
+      tl.to('#project-text', {
+        y: 0,
+        duration: 1,
+        opacity: 1,
+        ease: 'power2.out',
+      })
+      
+  });
+
+
+  // --- GSAP ABOUT ME SECTION  ---
+  useEffect(() => {   
+    gsap.set('#aboutMe-text', { y: 50, opacity: 1 });
+    gsap.set('#aboutMe-subHeading-text', { y: 80, opacity: 1 });
+    gsap.set('#aboutMe-description', { y: 60, opacity: 1 });
+
+    const tl = gsap.timeline({   
+      scrollTrigger: {
+        trigger: '#aboutMe-heading',
+        start: 'top 80%',
+        end: 'top 10%',
+        scrub: 2 ,
+        markers: true,
+      },
+    });
+
+    tl.to(
+      '#aboutMe-text',
+      {
+        y: 0,
+        opacity: 1,
+        duration: 2.5,
+        ease: 'power2.out',
+      },
+      '-=1.5'
+    )
+      .to(
+        '#aboutMe-subHeading-text',
+        {
+          y: 0,
+          opacity: 1,
+          duration: 2,
+          ease: 'power2.out',
+        },
+        '-=1'
+      )
+      .to(
+        '#aboutMe-description',
+        {
+          y: 0,
+          opacity: 1,
+          duration: 2,
+          ease: 'power2.out',
+        },
+        '-=1.2'
+      );
+
+    // Cleanup
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
     <>
       <main className='relative w-screen overflow-x-hidden min-h-screen'>
@@ -191,22 +303,22 @@ const Home = () => {
 
         <section id='work' className='min-h-screen w-full bg-dark text-white'>
           <div
-            id='heading'
-            className='font-anton flex-center flex-col py-20 px-10  '
+            id='work-heading'
+            className='font-anton flex-center flex-col py-30 px-10'
           >
-            <p className='font-montserrat text-[10px] md:text-sm mt-10 md:mt-50 '>
+            <p
+              id='featured-text'
+              className='font-montserrat text-[10px] md:text-sm mt-10 md:mt-10'
+            >
               Featured
             </p>
             <div className='flex justify-between items-center'>
-              <div className='w-full flex justify-start items-center'>
-                <span className='h-0.5 w-30  md:w-120 bg-white hidden md:block '></span>
-              </div>
-              <h1 className='text-8xl md:text-8xl uppercase text-center px-3 md:px-20 font-montserrat'>
+              <h1
+                id='work-text'
+                className='text-8xl md:text-9xl uppercase text-center px-3 md:px-20 font-montserrat'
+              >
                 Work
               </h1>
-              <div className='w-full flex justify-end items-center'>
-                <span className='h-0.5 w-30 md:w-120 bg-white hidden md:block '></span>
-              </div>
             </div>
           </div>
           <div className='h-fit flex-col space-y-50 px-3 md:px-5 py-10 '>
@@ -217,7 +329,10 @@ const Home = () => {
                   className='relative overflow-hidden group cursor-pointer aspect-[4/3] bg-neutral-900'
                 >
                   {/* Main background image - centered and sized */}
-                  <div className='absolute inset-0 flex items-center justify-center'>
+                  <div
+                    id='project-features'
+                    className='absolute inset-0 flex items-center justify-center'
+                  >
                     <img
                       src={`/images/mockup_${item}.jpg`}
                       alt={`Project mockup ${item}`}
@@ -233,7 +348,10 @@ const Home = () => {
                       View Project
                     </button>
                     <div className='bottom-0 absolute py-5 w-full px-4'>
-                      <p className='uppercase font-montserrat text-[10px] md:text-sm text-center'>
+                      <p
+                        id='project-text'
+                        className='uppercase font-montserrat text-[10px] md:text-sm text-center translate-y-full '
+                      >
                         art direction and web design
                       </p>
                       <GoArrowDownRight className='absolute bottom-5 right-4 text-2xl' />
@@ -251,7 +369,7 @@ const Home = () => {
               className='custom-text-style'
             />
           </div>
-          <div className='flex-center py-20 font-montserrat md:text-4xl text-xl'>
+          <di id='btn-projects' className='flex-center py-30 font-montserrat md:text-4xl text-xl'>
             <HoverLink href='/work'>
               <button className='uppercase cursor-pointer'>
                 <HoverText mode='chars' className=''>
@@ -259,34 +377,37 @@ const Home = () => {
                 </HoverText>
               </button>
             </HoverLink>
-          </div>
+          </di>
         </section>
 
         {/*                                                              ABOUT                                                                    */}
 
-        <section className='bg-light min-h-screen w-full'>
+        <section id='aboutMe-section' className='bg-light min-h-screen w-full'>
           <div
-            id='heading'
-            className='flex justify-center items-center py-20 px-10'
+            id='aboutMe-heading'
+            className='flex justify-center items-center py-30 px-10'
           >
-            <div className='w-full flex justify-start items-center'>
-              <span className='h-0.5 w-30  md:w-120 bg-dark hidden md:block '></span>
-            </div>
-            <h1 className='text-8xl md:text-8xl uppercase text-center px-3 md:px-10 font-montserrat'>
+            <h1
+              id='aboutMe-text'
+              className='text-8xl md:text-9xl uppercase text-center font-montserrat'
+            >
               about me
             </h1>
-            <div className='w-full flex justify-end items-center'>
-              <span className='h-0.5 w-30 md:w-120 bg-dark hidden md:block'></span>
-            </div>
           </div>
 
-          <div className='text-center capitalize py-30 mt-30 font-montserrat'>
-            <h1 className='md:text-6xl text-[20px] font-bold'>
+          <div id='content-container' className='text-center capitalize py-10 font-montserrat'>
+            <h1
+              id='aboutMe-subHeading-text'
+              className='md:text-6xl text-[20px] font-bold'
+            >
               A minimalist web designer crafting <br />
               timeless digital spaces that <br />
               inspire and engage
             </h1>
-            <p className='py-5 md:py-10 text-neutral-600 md:text-sm text-[10px] w-100 text-center md:text-center md:w-auto'>
+            <p
+              id='aboutMe-description'
+              className='py-5 md:py-10 text-neutral-600 md:text-sm text-[10px]'
+            >
               I specialize in creating clean, user-friendly designs that balance{' '}
               <br />
               beauty with function — helping brands tell their story with
