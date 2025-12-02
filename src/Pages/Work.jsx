@@ -5,7 +5,7 @@ import ProjectRow from '../components/ProjectRow';
 const allProjects = () => {
   return (
     <div className='min-h-screen'>
-      <div className='flex pl-10 pt-20 font-anton'>
+      <div className='flex pl-10 pt-10 md:pt-20 font-anton'>
         <h1 className='text-9xl font-bold'>ALL WORK</h1>
       </div>
       <div className='container mx-auto px-0'>

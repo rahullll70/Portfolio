@@ -12,6 +12,7 @@ const ProjectRow = ({ project }) => {
       onMouseLeave={() => setIsHovered(false)}
       style={{
         animationDelay: `${project.id * 0.15}s`,
+        opacity: 1,
       }}
     >
       {/* Full row overlay */}
@@ -24,11 +25,11 @@ const ProjectRow = ({ project }) => {
 
       {/* Left side - Project info */}
       <div
-        className={`md:col-span-5 ${project.color} p-8 flex flex-col justify-between min-h-[400px] border-black transition-all duration-500 relative z-20 `}
+        className={`md:col-span-5 ${project.color} p-8 flex flex-col justify-between md:min-h-[400px] border-black transition-all duration-500 relative z-20 `}
       >
         <div>
           <h2
-            className={`text-5xl font-bold mb-6 transition-colors duration-500 ${
+            className={`text-3xl md:text-5xl font-bold mb-6 transition-colors duration-500 ${
               isHovered ? 'text-white' : 'text-black'
             }`}
           >
@@ -38,7 +39,7 @@ const ProjectRow = ({ project }) => {
             {project.tags.map((tag, idx) => (
               <div
                 key={idx}
-                className={`text-md transition-colors duration-500 ${
+                className={`text-xs md:text-md transition-colors duration-500 ${
                   isHovered ? 'text-gray-200' : 'text-black'
                 }`}
               >
@@ -46,7 +47,7 @@ const ProjectRow = ({ project }) => {
               </div>
             ))}
           </div>
-          <GoArrowUpRight className={`absolute right-5 bottom-5 text-4xl ${isHovered ? 'text-white' : 'text-black'}`} />
+          <GoArrowUpRight className={`absolute right-5 top-10 md:right-5 md:bottom-5 text-2xl md:text-4xl ${isHovered ? 'text-white' : 'text-black'}`} />
         </div>
       </div>
 

@@ -442,10 +442,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='flex justify-between px-2 font-montserrat text-4xl'>
-          <span className='flex'>⁎</span>
-          <span className='flex'>⁎</span>
-        </div>
+        
 
         <div className='flex-center font-montserrat py-30'>
           <HoverLink href='/about'>
@@ -453,6 +450,10 @@ const Home = () => {
               <HoverText mode='chars'>learn more</HoverText>
             </button>
           </HoverLink>
+        </div>
+        <div className='flex justify-between px-2 py-10 font-montserrat text-4xl'>
+          <span className='flex'>⁎</span>
+          <span className='flex'>⁎</span>
         </div>
       </section>
     </main>
