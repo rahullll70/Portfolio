@@ -347,6 +347,7 @@ const Home = () => {
                 className='project-card relative overflow-hidden group cursor-pointer aspect-[4/3] bg-neutral-900'
               >
                 <div
+                href='/'
                   id='project-features'
                   className='absolute inset-0 flex items-center justify-center'
                 >
@@ -433,17 +434,14 @@ const Home = () => {
             >
               I specialize in creating clean, user-friendly designs that balance{' '}
               <br />
-              beauty with function — helping brands tell their story with
+              beauty with function helping brands tell their story with
               clarity, <br />
               purpose, and emotion. Every website I craft is built to feel{' '}
               <br />
               effortless, communicate value, and leave a lasting impression.
             </p>
           </div>
-        </div>
-
-        
-
+        </div>  
         <div className='flex-center font-montserrat py-30'>
           <HoverLink href='/about'>
             <button className='uppercase md:text-4xl text-xl cursor-pointer'>
