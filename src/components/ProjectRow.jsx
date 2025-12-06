@@ -23,11 +23,11 @@ const ProjectRow = ({ project }) => {
       }}
     >
       {/* Full row overlay - hidden on mobile */}
-      <div
+      <span
         className={`hidden md:block absolute w-full inset-0 bg-black pointer-events-none z-10 transition-all duration-500 ${
           isHovered ? 'translate-y-0' : '-translate-y-full'
         }`}
-      ></div>
+      ></span>
 
       {/* Left side - Project info */}
       <div

@@ -19,10 +19,10 @@ const ProjectDetail = () => {
 
   return (
     <div className='min-h-screen  bg-light'>
-      <div className='pt-30 grid grid-cols-3'>
+      <div className='pt-30 grid grid-cols-3 gap-8 px-40 font-montserrat'>
         {/* Hero Section */}
         <div
-          className='flex justify-center relative font-montserrat'
+          className='flex justify-center relative'
           style={{ backgroundColor: project.color }}
         >
           <div className='container mx-auto w-80 h-50 bg-dark text-white pt-5 pl-5'>
@@ -31,11 +31,10 @@ const ProjectDetail = () => {
         </div>
 
         {/* Description */}
-        <div className='w-80 mb-20'>
-          <p className='text-md text-gray-700 leading-relaxed'>
-            {project.description}
-          </p>
+        <div className='mb-20 pr-10'>
+          <p className='text-md leading-relaxed'>{project.description}</p>
         </div>
+
         {/* Project Info Section */}
         <div className='pb-20'>
           <div className='border-l h-70'>
@@ -54,7 +53,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Full Images Gallery */}
-      <div className='space-y-12 bg-dark'>
+      <div className='space-y-50 bg-dark'>
         {project.fullImages.map((img, idx) => (
           <div key={idx} className='animate-[fadeInUp_0.8s_ease-out]'>
             <img
@@ -66,14 +65,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Navigation */}
-      <div className= 'min-h-screen flex justify-between items-center'>
-        <button
-          onClick={() => navigate('/work')}
-          className='text-xl hover:underline'
-        >
-          ← Back to All Projects
-        </button>
-
+      <div className='min-h-screen flex justify-between items-center'>
         <button
           onClick={() => {
             const currentIndex = portfolioData.findIndex(
@@ -83,9 +75,14 @@ const ProjectDetail = () => {
               portfolioData[(currentIndex + 1) % portfolioData.length];
             navigate(`/work/${nextProject.slug}`);
           }}
-          className='text-xl hover:underline'
+          className='text-8xl font-montserrat'
         >
-          Next Project →
+          <h1 className='text-center'>
+            Next{' '}
+            <p className='font-redhat text-xl inline-flex'>{project.title}</p>
+          </h1>
+          <h1 className='pl-100'>Project</h1>
+          <video src=''></video>
         </button>
       </div>
     </div>
