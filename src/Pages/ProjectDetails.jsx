@@ -19,32 +19,32 @@ const ProjectDetail = () => {
 
   return (
     <div className='min-h-screen  bg-light'>
-      <div className='pt-30 grid grid-cols-3 gap-8 px-40 font-montserrat'>
+      <div className='pt-30 grid md:grid-cols-3 gap-5 md:gap-8 md:px-40 px-10 font-montserrat'>
         {/* Hero Section */}
         <div
           className='flex justify-center relative'
           style={{ backgroundColor: project.color }}
         >
-          <div className='container mx-auto w-80 h-50 bg-dark text-white pt-5 pl-5'>
-            <h1 className={`text-2xl `}>{project.title}</h1>
+          <div className='container mx-auto w-70 h-40 bg-dark text-white pt-5 pl-5 '>
+            <h1 className='text-xl md:text-2xl'>{project.title}</h1>
           </div>
         </div>
 
         {/* Description */}
-        <div className='mb-20 pr-10'>
-          <p className='text-md leading-relaxed'>{project.description}</p>
+        <div className='mb-20 md:pr-10 md:pt-0 pt-10'>
+          <p className='text-[10px] md:text-md w-60 leading-relaxed'>{project.description}</p>
         </div>
 
         {/* Project Info Section */}
         <div className='pb-20'>
-          <div className='border-l h-70'>
-            <div className='container mx-auto px-8 font-montserrat'>
+          <div className='border-l h-50 md:h-70'>
+            <div className='container mx-auto md:px-8 px-5 font-montserrat'>
               <div className='grid grid-cols-1 lg:grid-cols-1 mb-20'>
                 <div>
-                  <p className='text-xl font-bold'>{project.year}</p>
+                  <p className='text-xs md:text-2xl font-bold'>{project.year}</p>
                 </div>
                 <div>
-                  <p className='text-xl font-bold'>{project.role}</p>
+                  <p className='text-xs md:text-2xl font-bold'>{project.role}</p>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Full Images Gallery */}
-      <div className='space-y-50 bg-dark'>
+      <div className='space-y-5 md:space-y-50 bg-dark'>
         {project.fullImages.map((img, idx) => (
           <div key={idx} className='animate-[fadeInUp_0.8s_ease-out]'>
             <img
