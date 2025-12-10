@@ -50,6 +50,12 @@ body {
   --text-light: #e9ecef;
 }
 
+section {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
 .indicator-line {
   width: 1px;
   height: 6px;
@@ -80,7 +86,6 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
-
 
 @keyframes spin-slow {
   from {

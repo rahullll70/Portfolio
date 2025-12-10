@@ -14,7 +14,7 @@ const App = () => {
   return (
     <LoaderProvider>
       <Router>
-        <main className='relative w-screen overflow-x-hidden min-h-screen h-full overflow-y-auto cursor-default'>
+        <main className='relative w-screen overflow-x-hidden min-h-screen h-full overflow-y-auto cursor-default bg-light'>
           <Navbar />
           <Routes>
             <Route path='/' element={<Home />} />

@@ -7,6 +7,8 @@ import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/all';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useNavigate } from 'react-router-dom';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +17,10 @@ const Home = () => {
   const videoRef = useRef(null);
   const tlRef = useRef(null);
   const cleanupFnsRef = useRef([]);
+  const navigate = useNavigate();
+  const handleClick = (itemId) => {
+    navigate(`/work/project-${itemId}`);
+  };
 
   const HoverLink = ({ href, children }) => {
     const isExternal = href?.startsWith('http') || href?.startsWith('mailto:');
@@ -226,99 +232,93 @@ const Home = () => {
   }, [showLoader]);
 
   // --- GSAP ABOUT ME SECTION ---
-  useEffect(() => {
-    if (showLoader) return;
+useEffect(() => {
+  if (showLoader) return;
 
-    gsap.set('#aboutMe-heading', { y: 150, opacity: 0 });
-    gsap.set('#aboutMe-subHeading-text', { x: -200, opacity: 0 });
-    gsap.set('#aboutMe-description', { x: 200, opacity: 0 });
+  // Set initial states
+  gsap.set('#aboutMe-heading', { y: 150, opacity: 0 });
+  gsap.set('#aboutMe-subHeading-text', { x: -200, opacity: 0 });
+  gsap.set('#aboutMe-description', { x: 200, opacity: 0 });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#aboutMe-section',
-        start: 'top 80%',
-        end: 'top 20%',
-        scrub: 1.5,
-      },
-    });
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#aboutMe-section',
+      start: 'top 80%',
+      end: 'bottom 20%',
+      scrub: 1.5,
+    },
+  });
 
-    tl.to('#aboutMe-heading', {
-      y: 0,
+  tl.to('#aboutMe-heading', {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: 'power3.out',
+  })
+    .to('#aboutMe-subHeading-text', {
+      x: 0,
       opacity: 1,
-      duration: 2,
+      duration: 1,
       ease: 'power3.out',
-    })
-      .to(
-        '#aboutMe-subHeading-text',
-        {
-          x: 0,
-          opacity: 1,
-          duration: 2,
-          ease: 'power3.out',
-        },
-        '+=2'
-      )
-      .to(
-        '#aboutMe-description',
-        {
-          x: 0,
-          opacity: 1,
-          duration: 2,
-          ease: 'power3.out',
-        },
-        '+=3'
-      );
+    }, '-=0.5')
+    .to('#aboutMe-description', {
+      x: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'power3.out',
+    }, '-=1');
 
-    return () => tl.kill();
-  }, [showLoader]);
+  return () => tl.kill();
+}, [showLoader]);
+
 
   return (
     <main className='relative w-screen overflow-x-hidden min-h-screen'>
       {/* HOME SECTION */}
-      <section
-        id='home'
-        className='md:items-center grid min-h-screen bg-light px-1 md:px-0'
-      >
-        <div className='font-bold font-rothefight w-full md:w-fit uppercase md:text-[140px] px-0.5 md:px-10'>
-          <div
-            className={`title overflow-hidden space-y-60 ${
-              showLoader ? 'invisible' : ''
-            }`}
-          >
-            <h1 className='text-7xl md:text-8xl lg:text-9xl h-fit md:leading-55 leading-35 mt-10 md:mt-15'>
-              Creative <br />
-              Design
-              <span className='text-2xl md:text-4xl lg:text-5xl'>And</span>
-              <br />
-              Experience
-            </h1>
-          </div>
-        </div>
-        <div className='flex-center md:items-start md:justify-end w-full h-100 md:h-0'>
-          <div
-            ref={videoRef}
-            id='video'
-            className={`relative md:fixed bottom-10 w-fit mt-8 md:mt-0 md:top-45 md:right-0 md:mr-10 md:w-186 ${
-              showLoader ? 'invisible' : ''
-            }`}
-            style={{ minHeight: '100px' }}
-          >
-            <video
-              src='/videos/website-video-2.mp4'
-              autoPlay
-              muted
-              loop
-              playsInline
-              className='px-0.5 md:px-0 w-full h-fit object-cover block md:py-0 py-20 ease-in-out duration-100'
-            />
-          </div>
-        </div>
-      </section>
+  <section
+  id='home'
+  className='relative md:items-center flex flex-col md:grid h-180 bg-light px-1 md:px-0 pb-0 mb-0'
+>
+  <div className='font-bold font-rothefight w-full md:w-fit uppercase md:text-[140px] px-0.5 md:px-10 mb-0'>
+    <div
+      className={`title overflow-hidden ${
+        showLoader ? 'invisible' : ''
+      }`}
+    >
+      <h1 className='text-7xl md:text-8xl lg:text-9xl h-fit md:leading-55 leading-35 mt-10 md:mt-15 mb-0'>
+        Creative <br />
+        Design
+        <span className='text-2xl md:text-4xl lg:text-5xl'>And</span>
+        <br />
+        Experience
+      </h1>
+    </div>
+  </div>
+  <div className='flex-center md:items-start md:justify-end w-full md:h-0 mb-0 pb-0'>
+    <div
+      ref={videoRef}
+      id='video'
+      className={`relative md:fixed w-full md:w-186 mt-8 md:mt-0 md:top-45 md:right-0 md:mr-10 mb-0 pb-0 ${
+        showLoader ? 'invisible' : ''
+      }`}
+      style={{ minHeight: '100px' }}
+    >
+      <video
+        src='/videos/website-video-2.mp4'
+        autoPlay
+        muted
+        loop
+        playsInline
+        className='w-full h-auto object-cover block ease-in-out duration-100'
+      />
+    </div>
+  </div>
+</section>
 
       {/* WORK SECTION */}
       <section
         id='work'
-        className='min-h-screen w-full bg-dark text-white -mt-1'
+        className='min-h-screen w-full bg-dark text-white -mt-2 pt-0'
       >
         <div
           id='work-heading'
@@ -339,8 +339,8 @@ const Home = () => {
             </h1>
           </div>
         </div>
-        <div className='h-fit flex-col space-y-50 px-3 md:px-5 py-10'>
-          <div className='w-full h-fit grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-3'>
+        <div  className='h-fit flex-col space-y-50 px-3 md:px-5 py-10'>
+          <div onClick={() => handleClick(item)}  className='w-full h-fit grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-3'>
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
@@ -359,7 +359,7 @@ const Home = () => {
                   />
                 </div>
                 <div className='absolute inset-0 grayscale hover:grayscale-0 ease-in backdrop-blur-0 group-hover:backdrop-blur-sm transition-[backdrop-filter] duration-500' />
-                <div className='absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'>
+                <div  className='absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'>
                   <video
                     className='hover-video px-8 py-3 text-black font-semibold w-120 transition-colors z-10'
                     src={`/videos/website-video-${item}.mp4`}
@@ -418,19 +418,19 @@ const Home = () => {
 
           <div
             id='content-container'
-            className='text-center capitalize py-10 font-montserrat'
+            className='text-center capitalize py-10 font-montserrat overflow-x-hidden'
           >
-            <h1
+            <p
               id='aboutMe-subHeading-text'
               className='md:text-6xl text-[20px] font-bold'
             >
               A minimalist web designer crafting <br />
               timeless digital spaces that <br />
               inspire and engage
-            </h1>
+            </p>
             <p
               id='aboutMe-description'
-              className='py-5 md:py-10 text-neutral-600 md:text-sm text-[10px]'
+              className='py-5 md:py-10 text-neutral-800 md:text-sm text-[10px]'
             >
               I specialize in creating clean, user-friendly designs that balance{' '}
               <br />
