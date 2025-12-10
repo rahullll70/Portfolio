@@ -9,7 +9,7 @@ const ProjectRow = ({ project }) => {
 
   const handleClick = () => {
     navigate(`/work/${project.slug}`);
-  }
+  };
 
   return (
     <div
@@ -24,7 +24,7 @@ const ProjectRow = ({ project }) => {
     >
       {/* Full row overlay - hidden on mobile */}
       <span
-        className={`hidden md:block absolute w-full inset-0 bg-black pointer-events-none z-10 transition-all duration-500 ${
+        className={`hidden md:block absolute w-full inset-0 bg-dark pointer-events-none z-10 transition-all duration-500 ${
           isHovered ? 'translate-y-0' : '-translate-y-full'
         }`}
       ></span>
@@ -45,7 +45,7 @@ const ProjectRow = ({ project }) => {
             {project.tags.map((tag, idx) => (
               <div
                 key={idx}
-                className={`text-xs md:text-md transition-colors duration-500 ${
+                className={`text-md md:text-md transition-colors duration-500 ${
                   isHovered ? 'md:text-gray-200' : 'text-black'
                 }`}
               >
