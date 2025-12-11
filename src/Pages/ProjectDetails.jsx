@@ -32,7 +32,7 @@ const ProjectDetail = () => {
 
         {/* Description */}
         <div className='mb-20 md:pr-10 md:pt-0 pt-10'>
-          <p className='text-xs md:text-[16px] md:w-100 leading-relaxed'>{project.description}</p>
+          <p className='text-xs md:text-[16px] md:w-100 leading-relaxed opacity-80'>{project.description}</p>
         </div>
 
         {/* Project Info Section */}
@@ -65,7 +65,7 @@ const ProjectDetail = () => {
       </div>
 
       {/* Navigation */}
-      <div className='min-h-screen flex justify-between items-center'>
+      <div className='min-h-screen flex justify-between items-center bg-dark text-white'>
         <button
           onClick={() => {
             const currentIndex = portfolioData.findIndex(
@@ -75,13 +75,13 @@ const ProjectDetail = () => {
               portfolioData[(currentIndex + 1) % portfolioData.length];
             navigate(`/work/${nextProject.slug}`);
           }}
-          className='text-8xl font-montserrat'
+          className='text-6xl md:text-8xl font-montserrat text-ce'
         >
           <h1 className='text-center'>
             Next{' '}
             <p className='font-redhat text-xl inline-flex'>{project.title}</p>
           </h1>
-          <h1 className='pl-100'>Project</h1>
+          <h1 className='md:pl-100 pl-30'>Project</h1>
           <video src=''></video>
         </button>
       </div>

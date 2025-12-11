@@ -8,6 +8,7 @@ import { SplitText } from 'gsap/all';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useNavigate } from 'react-router-dom';
+import { portfolioData } from '../data/portfolioData';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,8 +19,17 @@ const Home = () => {
   const tlRef = useRef(null);
   const cleanupFnsRef = useRef([]);
   const navigate = useNavigate();
-  const handleClick = (itemId) => {
-    navigate(`/work/project-${itemId}`);
+  
+  const mockupToProject = {
+  1: portfolioData[0]?.slug || 'project-1',
+  2: portfolioData[1]?.slug || 'project-2', 
+  3: portfolioData[2]?.slug || 'project-3',
+  4: portfolioData[3]?.slug || 'project-4',
+};
+
+const handleClick = (itemId) => {
+  const projectSlug = mockupToProject[itemId];
+    navigate(`/work/${projectSlug}`);
   };
 
   const HoverLink = ({ href, children }) => {
@@ -340,10 +350,11 @@ useEffect(() => {
           </div>
         </div>
         <div  className='h-fit flex-col space-y-50 px-3 md:px-5 py-10'>
-          <div onClick={() => handleClick(item)}  className='w-full h-fit grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-3'>
+          <div className='w-full h-fit grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-3'>
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
+                onClick={() => handleClick(item)}
                 className='project-card relative overflow-hidden group cursor-pointer aspect-[4/3] bg-neutral-900'
               >
                 <div

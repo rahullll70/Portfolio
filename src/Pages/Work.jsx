@@ -8,7 +8,7 @@ const allProjects = () => {
       <div className='flex pl-10 pt-10 md:pt-20 font-anton'>
         <h1 className='text-9xl font-bold'>ALL WORK</h1>
       </div>
-      <div className='mx-auto pl-0 px-0'> {/* Removed 'container' and 'pl-2' */}
+      <div className='mx-auto pl-0 px-0'>
         <div className='min-h-screen pt-10 pb-2'>
           <div className='mx-auto space-y-0'>
             {portfolioData.map((project) => (
