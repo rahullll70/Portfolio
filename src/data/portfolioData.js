@@ -7,10 +7,12 @@ export const portfolioData = [
 
     // Summary Images
     images: [
-      { src: '/images/restaura_1.png', type: 'single', aspect: '1x1' },
-      { src: '/images/restaura_2.png', type: 'wide', aspect: '16x9' },
-      { src: '/images/restaura_3.png', type: 'single', aspect: '3x4' },
-      { src: '/images/restaura_4.png', type: 'wide', aspect: '16x9' },
+      { src: '/images/11revens_1.png', type: 'single', aspect: '1x1' },
+      { src: '/images/11revens_2.png', type: 'single', aspect: '1x1' },
+      { src: '/images/11revens_poster_1.png', type: 'wide', aspect: '16x9' },
+      { src: '/images/11revens_4.png', type: 'wide', aspect: '16x9' },
+      { src: '/images/11revens_5.png', type: 'single', aspect: '1x1' },
+      { src: '/images/11revens_poster_2.png', type: 'single', aspect: '1x1' },
     ],
 
     // Details for individual page
@@ -21,11 +23,13 @@ export const portfolioData = [
 
     // Full project showcase images
     fullImages: [
-      { src: '/images/restaura_1.png', caption: 'Homepage Hero' },
-      { src: '/images/restaura_2.png', caption: 'Menu Section' },
-      { src: '/images/restaura_3.png', caption: 'About Page' },
-      { src: '/images/restaura_4.png', caption: 'Contact Form' },
-      { src: '/images/restaura_2.png', caption: 'Mobile View' },
+      { src: '/images/11revens_1.png', caption: '' },
+      { src: '/images/11revens_2.png', caption: '' },
+      { src: '/images/11revens_poster_1.png', caption: '' },
+      { src: '/images/11revens_4.png', caption: '' },
+      { src: '/images/11revens_5.png', caption: '' },
+      { src: '/images/11revens_poster_2.png', caption: '' },
+      { src: '/images/11revens_poster_3.png', caption: '' },
     ],
   },
 
