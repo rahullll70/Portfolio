@@ -18,7 +18,7 @@ export const portfolioData = [
     // Details for individual page
     description:
       "11 Revens is a modern fine dining establishment that combines elegant design with intuitive functionality. The website features smooth animations, ambient visuals, and a minimalist aesthetic that reflects the restaurant's sophisticated atmosphere. Every element is crafted to provide guests with an immersive preview of their dining experience.",
-    year: '#2024',
+    year: '#2025',
     role: '#Lead Designer & Developer',
 
     // Full project showcase images
@@ -49,7 +49,7 @@ export const portfolioData = [
 
     description:
       'Velvat Pour is a luxury beverage brand that embodies elegance and craftsmanship. The identity system includes logo design, packaging concepts, and comprehensive brand guidelines. Drawing from rich textures and fluid forms, the visual language balances sophistication with modern appeal across all touchpoints.',
-    year: '#2024',
+    year: '#2025',
     role: '#Brand Designer',
 
     fullImages: [
@@ -75,7 +75,7 @@ export const portfolioData = [
 
     description:
       'Restaura is a modern culinary destination where tradition meets innovation. The project includes complete brand identity and digital experience design, featuring refined typography, a restrained color palette, and seamless responsive design that makes exploring menus and making reservations effortless.',
-    year: '#2023',
+    year: '#2025',
     role: '#Designer & Developer',
 
     fullImages: [
