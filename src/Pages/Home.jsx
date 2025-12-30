@@ -9,6 +9,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useNavigate } from 'react-router-dom';
 import { portfolioData } from '../data/portfolioData';
+import Contact from '../Pages/Contact'
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,16 +20,16 @@ const Home = () => {
   const tlRef = useRef(null);
   const cleanupFnsRef = useRef([]);
   const navigate = useNavigate();
-  
-  const mockupToProject = {
-  1: portfolioData[0]?.slug || 'project-1',
-  2: portfolioData[1]?.slug || 'project-2', 
-  3: portfolioData[2]?.slug || 'project-3',
-  4: portfolioData[3]?.slug || 'project-4',
-};
 
-const handleClick = (itemId) => {
-  const projectSlug = mockupToProject[itemId];
+  const mockupToProject = {
+    1: portfolioData[0]?.slug || 'project-1',
+    2: portfolioData[1]?.slug || 'project-2',
+    3: portfolioData[2]?.slug || 'project-3',
+    4: portfolioData[3]?.slug || 'project-4',
+  };
+
+  const handleClick = (itemId) => {
+    const projectSlug = mockupToProject[itemId];
     navigate(`/work/${projectSlug}`);
   };
 
@@ -47,6 +48,36 @@ const handleClick = (itemId) => {
       </a>
     );
   };
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // CLEANUP ALL GSAP ANIMATIONS ON UNMOUNT
+  useEffect(() => {
+    return () => {
+      // Kill all ScrollTriggers
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      
+      // Kill timeline
+      if (tlRef.current) {
+        tlRef.current.kill();
+      }
+      
+      // Run all cleanup functions
+      cleanupFnsRef.current.forEach((fn) => fn());
+      cleanupFnsRef.current = [];
+      
+      // Reset video element specifically
+      if (videoRef.current) {
+        gsap.set('#video', { 
+          clearProps: 'width,height,top,left,margin',
+          opacity: 0 
+        });
+      }
+    };
+  }, []);
 
   // --- GSAP HERO SECTION ---
   useGSAP(() => {
@@ -75,6 +106,11 @@ const handleClick = (itemId) => {
           },
           '<0.3'
         );
+
+      return () => {
+        mainTl.kill();
+        heroSplit.revert();
+      };
     }
   }, [showLoader]);
 
@@ -242,93 +278,97 @@ const handleClick = (itemId) => {
   }, [showLoader]);
 
   // --- GSAP ABOUT ME SECTION ---
-useEffect(() => {
-  if (showLoader) return;
+  useEffect(() => {
+    if (showLoader) return;
 
-  // Set initial states
-  gsap.set('#aboutMe-heading', { y: 150, opacity: 0 });
-  gsap.set('#aboutMe-subHeading-text', { x: -200, opacity: 0 });
-  gsap.set('#aboutMe-description', { x: 200, opacity: 0 });
+    gsap.set('#aboutMe-heading', { y: 150, opacity: 0 });
+    gsap.set('#aboutMe-subHeading-text', { x: -200, opacity: 0 });
+    gsap.set('#aboutMe-description', { x: 200, opacity: 0 });
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#aboutMe-section',
-      start: 'top 80%',
-      end: 'bottom 20%',
-      scrub: 1.5,
-    },
-  });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#aboutMe-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: 1.5,
+      },
+    });
 
-  tl.to('#aboutMe-heading', {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    ease: 'power3.out',
-  })
-    .to('#aboutMe-subHeading-text', {
-      x: 0,
+    tl.to('#aboutMe-heading', {
+      y: 0,
       opacity: 1,
       duration: 1,
       ease: 'power3.out',
-    }, '-=0.5')
-    .to('#aboutMe-description', {
-      x: 0,
-      opacity: 1,
-      duration: 1,
-      ease: 'power3.out',
-    }, '-=1');
+    })
+      .to(
+        '#aboutMe-subHeading-text',
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+        },
+        '-=0.5'
+      )
+      .to(
+        '#aboutMe-description',
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+        },
+        '-=1'
+      );
 
-  return () => tl.kill();
-}, [showLoader]);
-
+    return () => tl.kill();
+  }, [showLoader]);
 
   return (
-    <main className='relative w-screen overflow-x-hidden min-h-screen'>
+    <main className='relative w-screen overflow-x-hidden min-h-screen z-10'>
       {/* HOME SECTION */}
-  <section
-  id='home'
-  className='relative md:items-center flex flex-col md:grid h-180 bg-light px-1 md:px-0 pb-0 mb-0'
->
-  <div className='font-bold font-rothefight w-full md:w-fit uppercase md:text-[140px] px-0.5 md:px-10 mb-0'>
-    <div
-      className={`title overflow-hidden ${
-        showLoader ? 'invisible' : ''
-      }`}
-    >
-      <h1 className='text-7xl md:text-8xl lg:text-9xl h-fit md:leading-55 leading-35 mt-10 md:mt-15 mb-0'>
-        Creative <br />
-        Design
-        <span className='text-2xl md:text-4xl lg:text-5xl'>And</span>
-        <br />
-        Experience
-      </h1>
-    </div>
-  </div>
-  <div className='flex-center md:items-start md:justify-end w-full md:h-0 mb-0 pb-0'>
-    <div
-      ref={videoRef}
-      id='video'
-      className={`relative md:fixed w-full md:w-186 mt-8 md:mt-0 md:top-45 md:right-0 md:mr-10 mb-0 pb-0 ${
-        showLoader ? 'invisible' : ''
-      }`}
-      style={{ minHeight: '100px' }}
-    >
-      <video
-        src='/videos/website-video-2.mp4'
-        autoPlay
-        muted
-        loop
-        playsInline
-        className='w-full h-auto object-cover block ease-in-out duration-100'
-      />
-    </div>
-  </div>
-</section>
+      <section
+        id='home'
+        className='relative md:items-center flex flex-col md:grid h-180 bg-light px-1 md:px-0 pb-0 mb-0'
+      >
+        <div className='font-bold font-rothefight w-full md:w-fit uppercase md:text-[140px] px-0.5 md:px-10 mb-0'>
+          <div
+            className={`title overflow-hidden ${showLoader ? 'invisible' : ''}`}
+          >
+            <h1 className='text-7xl md:text-8xl lg:text-9xl h-fit md:leading-55 leading-35 mt-10 md:mt-15 mb-0'>
+              Creative <br />
+              Design
+              <span className='text-2xl md:text-4xl lg:text-5xl'>And</span>
+              <br />
+              Experience
+            </h1>
+          </div>
+        </div>
+        <div className='flex-center md:items-start md:justify-end w-full md:h-0 mb-0 pb-0'>
+          <div
+            ref={videoRef}
+            id='video'
+            className={`relative md:fixed w-full md:w-186 mt-8 md:mt-0 md:top-45 md:right-0 md:mr-10 mb-0 pb-0 mx-1 md:0 ${
+              showLoader ? 'invisible' : ''
+            }`}
+            style={{ minHeight: '100px' }}
+          >
+            <video
+              src='/videos/website-video-2.mp4'
+              autoPlay
+              muted
+              loop
+              playsInline
+              className='w-full h-auto object-cover block ease-in-out duration-100'
+            />
+          </div>
+        </div>
+      </section>
 
       {/* WORK SECTION */}
       <section
         id='work'
-        className='min-h-screen w-full bg-dark text-white -mt-2 pt-0'
+        className='relative min-h-screen w-full bg-dark text-white -mt-2 pt-0 z-10'
       >
         <div
           id='work-heading'
@@ -343,13 +383,13 @@ useEffect(() => {
           <div className='flex justify-between items-center'>
             <h1
               id='work-text'
-              className='text-8xl md:text-9xl uppercase text-center px-3 md:px-20 font-montserrat'
+              className='text-7xl md:text-9xl uppercase text-center px-3 md:px-20 font-montserrat'
             >
               Work
             </h1>
           </div>
         </div>
-        <div  className='h-fit flex-col space-y-50 px-3 md:px-5 py-10'>
+        <div className='h-fit flex-col space-y-50 px-3 md:px-5 py-10'>
           <div className='w-full h-fit grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-3'>
             {[1, 2, 3, 4].map((item) => (
               <div
@@ -358,7 +398,6 @@ useEffect(() => {
                 className='project-card relative overflow-hidden group cursor-pointer aspect-[4/3] bg-neutral-900'
               >
                 <div
-                href='/'
                   id='project-features'
                   className='absolute inset-0 flex items-center justify-center'
                 >
@@ -370,7 +409,7 @@ useEffect(() => {
                   />
                 </div>
                 <div className='absolute inset-0 grayscale hover:grayscale-0 ease-in backdrop-blur-0 group-hover:backdrop-blur-sm transition-[backdrop-filter] duration-500' />
-                <div  className='absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'>
+                <div className='absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500'>
                   <video
                     className='hover-video px-8 py-3 text-black font-semibold w-120 transition-colors z-10'
                     src={`/videos/website-video-${item}.mp4`}
@@ -412,7 +451,7 @@ useEffect(() => {
       </section>
 
       {/* ABOUT SECTION */}
-      <section id='aboutMe-section' className='bg-light min-h-screen w-full'>
+      <section id='aboutMe-section' className='relative bg-light min-h-screen w-full z-10'>
         <div className='flex justify-between px-2 py-10 font-montserrat text-4xl'>
           <span className='flex'>⁎</span>
           <span className='flex'>⁎</span>
@@ -422,7 +461,7 @@ useEffect(() => {
             id='aboutMe-heading'
             className='flex justify-center items-center py-10 px-10'
           >
-            <h1 className='text-8xl md:text-3xl uppercase text-center font-montserrat'>
+            <h1 className='text-7xl md:text-3xl uppercase text-center px-3 md:px-20 font-montserrat'>
               about me
             </h1>
           </div>
@@ -445,14 +484,14 @@ useEffect(() => {
             >
               I specialize in creating clean, user-friendly designs that balance{' '}
               <br />
-              beauty with function helping brands tell their story with
-              clarity, <br />
+              beauty with function helping brands tell their story with clarity,{' '}
+              <br />
               purpose, and emotion. Every website I craft is built to feel{' '}
               <br />
               effortless, communicate value, and leave a lasting impression.
             </p>
           </div>
-        </div>  
+        </div>
         <div className='flex-center font-montserrat py-30'>
           <HoverLink href='/about'>
             <button className='uppercase md:text-4xl text-xl cursor-pointer'>
@@ -465,6 +504,7 @@ useEffect(() => {
           <span className='flex'>⁎</span>
         </div>
       </section>
+      <Contact />
     </main>
   );
 };

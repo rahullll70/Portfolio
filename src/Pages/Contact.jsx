@@ -1,6 +1,6 @@
 import { GoArrowDownRight } from 'react-icons/go';
-import TextPressure from './TextPressure';
-import HoverText from './HoverText';
+import TextPressure from '../components/TextPressure';
+import HoverText from '../components/HoverText';
 
 const Contact = () => {
   const HoverLink = ({ href, children }) => (

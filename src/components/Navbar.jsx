@@ -1,13 +1,20 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useGSAP } from '@gsap/react';
 import HoverText from './HoverText';
 import gsap from 'gsap';
 
 const Navbar = () => {
+  const location = useLocation();
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const audioElementRef = useRef(null);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     if (!audioElementRef.current) return;
 
@@ -23,7 +30,6 @@ const Navbar = () => {
     setIsIndicatorActive((prev) => !prev);
   };
 
-  const [setActive, isSetActive] = useState('Home');
   const links = [
     { name: 'Home', path: '/' },
     { name: 'Work', path: '/work' },
@@ -46,7 +52,7 @@ const Navbar = () => {
     });
   }, []);
 
-   return (
+  return (
     <div
       id='navbar'
       className='z-50 rounded-lg px-3 py-2.5 md:px-4 md:py-3 flex items-center justify-center bg-dark w-auto fixed left-1/2 transform -translate-x-1/2 bottom-4 md:bottom-auto md:top-10'
@@ -83,7 +89,7 @@ const Navbar = () => {
               </HoverText>
 
               <span
-                className={`absolute left-0 -bottom-1 h-[1px] bg-light transition-all duration-300 
+                className={`absolute left-0 -bottom-1 h-[1px] bg-light transition-all duration-300
                 ${
                   location.pathname === link.path
                     ? 'w-full'

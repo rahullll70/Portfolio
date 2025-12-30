@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import CounterLoader from './CounterLoader';
 
 const LoaderContext = createContext();
@@ -14,6 +15,8 @@ export const useLoader = () => {
 export const LoaderProvider = ({ children }) => {
   const [showLoader, setShowLoader] = useState(true);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const location = useLocation();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const hideLoader = () => {
     setShowLoader(false);
@@ -26,6 +29,17 @@ export const LoaderProvider = ({ children }) => {
     setShowLoader(true);
     setAnimationComplete(false);
   };
+
+  // Trigger loader on route change (except initial load)
+  useEffect(() => {
+    if (isInitialLoad) {
+      setIsInitialLoad(false);
+      return;
+    }
+
+    // Trigger loader for route changes
+    triggerLoader();
+  }, [location.pathname]);
 
   return (
     <LoaderContext.Provider
