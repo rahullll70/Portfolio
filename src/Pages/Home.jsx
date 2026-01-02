@@ -9,8 +9,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useNavigate } from 'react-router-dom';
 import { portfolioData } from '../data/portfolioData';
-import Contact from '../Pages/Contact'
-
+import Contact from '../Pages/Contact';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,21 +58,21 @@ const Home = () => {
     return () => {
       // Kill all ScrollTriggers
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      
+
       // Kill timeline
       if (tlRef.current) {
         tlRef.current.kill();
       }
-      
+
       // Run all cleanup functions
       cleanupFnsRef.current.forEach((fn) => fn());
       cleanupFnsRef.current = [];
-      
+
       // Reset video element specifically
       if (videoRef.current) {
-        gsap.set('#video', { 
+        gsap.set('#video', {
           clearProps: 'width,height,top,left,margin',
-          opacity: 0 
+          opacity: 0,
         });
       }
     };
@@ -133,6 +132,14 @@ const Home = () => {
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        onComplete: () => {
+          // Make video stay fixed in background after animation
+          gsap.set('#video', { position: 'fixed', zIndex: 0 });
+        },
+        onReverseComplete: () => {
+          // Reset position when scrolling back up
+          gsap.set('#video', { position: 'fixed', zIndex: 'auto' });
+        },
       },
     });
 
@@ -155,6 +162,7 @@ const Home = () => {
             left: 0,
             margin: 0,
             ease: 'none',
+            zIndex: 0,
           }
         )
         .to('.title', { x: '-100%', opacity: 0, ease: 'power1.in' }, 0);
@@ -451,7 +459,10 @@ const Home = () => {
       </section>
 
       {/* ABOUT SECTION */}
-      <section id='aboutMe-section' className='relative bg-light min-h-screen w-full z-10'>
+      <section
+        id='aboutMe-section'
+        className='relative bg-light min-h-screen w-full z-10'
+      >
         <div className='flex justify-between px-2 py-10 font-montserrat text-4xl'>
           <span className='flex'>⁎</span>
           <span className='flex'>⁎</span>

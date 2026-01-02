@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 
 const CounterLoader = ({
   onComplete,
-  bgColor = 'bg-[#242423]',
+  bgColor = 'bg-[#111519]',
   textColor = 'text-white',
 }) => {
   const [count, setCount] = useState(0);
