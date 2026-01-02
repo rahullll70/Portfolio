@@ -1,4 +1,5 @@
 import React from 'react';
+import Contact from './Contact';
 
 const About = () => {
   return (
@@ -58,6 +59,7 @@ const About = () => {
           </p>
         </div>
       </div>
+      <Contact />
     </main>
   );
 };

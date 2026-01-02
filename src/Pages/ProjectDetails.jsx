@@ -1,16 +1,59 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { portfolioData } from '../data/portfolioData';
+import Contact from './Contact';
+
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const imageRefs = useRef([]);
 
   const project = portfolioData.find((p) => p.slug === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    // Clean up refs array to match current images length
+    imageRefs.current = imageRefs.current.slice(0, project?.fullImages?.length || 0);
+
+    // Small delay to ensure all refs are mounted
+    const timer = setTimeout(() => {
+      imageRefs.current.forEach((wrapper, index) => {
+        if (wrapper) {
+          // Set initial state
+          gsap.set(wrapper, { height: 0, opacity: 0 });
+          
+          // Create individual ScrollTrigger
+          gsap.to(wrapper, {
+            height: 'auto',
+            opacity: 1,
+            duration: 1.5,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: wrapper,
+              start: 'top 85%',
+              end: 'top 20%',
+              scrub: 2,
+              markers: false,
+              id: `image-${index}`, // Add unique ID for debugging
+            }
+          });
+        }
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, [project?.fullImages]);
 
   if (!project) {
     navigate('/work');
@@ -53,11 +96,20 @@ const ProjectDetail = () => {
       </div>
 
       {/* Full Images Gallery */}
-      <div className='space-y-5 md:space-y-50 bg-dark'>
+      <div className='space-y-15 md:space-y-100 bg-dark'>
         {project.fullImages.map((img, idx) => (
-          <div key={idx} className='animate-[fadeInUp_0.8s_ease-out]'>
+          <div 
+            key={idx} 
+            ref={el => {
+              if (el) {
+                imageRefs.current[idx] = el;
+              }
+            }}
+            className='overflow-hidden'
+          >
             <img
               src={img.src}
+              alt={`Project ${idx + 1}`}
               className='w-full h-auto object-cover shadow-2xl'
             />
           </div>
@@ -85,6 +137,7 @@ const ProjectDetail = () => {
           <video src=''></video>
         </button>
       </div>
+      <Contact />
     </div>
   );
 };

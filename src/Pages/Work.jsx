@@ -1,6 +1,7 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
 import ProjectRow from '../components/ProjectRow';
+import Contact from './Contact';
 
 const allProjects = () => {
   return (
@@ -20,7 +21,9 @@ const allProjects = () => {
           </div>
         </div>
       </div>
+      <Contact />
     </div>
+    
   );
 };
 
