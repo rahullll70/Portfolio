@@ -20,17 +20,17 @@ const ProjectDetail = () => {
   }, []);
 
   useEffect(() => {
-    // Clean up refs array to match current images length
+    
     imageRefs.current = imageRefs.current.slice(0, project?.fullImages?.length || 0);
 
-    // Small delay to ensure all refs are mounted
+   
     const timer = setTimeout(() => {
       imageRefs.current.forEach((wrapper, index) => {
         if (wrapper) {
-          // Set initial state
+          
           gsap.set(wrapper, { height: 0, opacity: 0 });
           
-          // Create individual ScrollTrigger
+          
           gsap.to(wrapper, {
             height: 'auto',
             opacity: 1,
@@ -42,7 +42,7 @@ const ProjectDetail = () => {
               end: 'top 20%',
               scrub: 2,
               markers: false,
-              id: `image-${index}`, // Add unique ID for debugging
+              id: `image-${index}`, 
             }
           });
         }

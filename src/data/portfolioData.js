@@ -86,4 +86,34 @@ export const portfolioData = [
       { src: '/images/restaura_5.png', caption: 'Mobile Layout' },
     ],
   },
+
+   {
+    id: 4,
+    slug: 'drip&dusk',
+    title: 'Drip & Dusk',
+    tags: ['Brand Design', 'Web Design'],
+
+    images: [
+      { src: '/images/drip_1.png', type: 'single', aspect: '1x1' },
+      { src: '/images/drip_2.png', type: 'wide', aspect: '16x9' },
+      { src: '/images/drip_3.png', type: 'single', aspect: '1x1' },
+      { src: '/images/drip_4.png', type: 'single', aspect: '3x4' },
+      { src: '/images/drip_5.png', type: 'wide', aspect: '16x9' },
+      { src: '/images/drip_6.png', type: 'wide', aspect: '1x1' }
+    ],
+
+    description:
+      'Restaura is a modern culinary destination where tradition meets innovation. The project includes complete brand identity and digital experience design, featuring refined typography, a restrained color palette, and seamless responsive design that makes exploring menus and making reservations effortless.',
+    year: '#2026',
+    role: '#Designer & Developer',
+
+    fullImages: [
+      { src: '/images/drip_1.png', caption: 'Logo & Branding' },
+      { src: '/images/drip_2.png', caption: 'Landing Page' },
+      { src: '/images/drip_3.png', caption: 'Brand Colors & Typography' },
+      { src: '/images/drip_4.png', caption: 'Menu Page' },
+      { src: '/images/drip_5.png', caption: 'Mobile Layout' },
+      { src: '/images/drip_6.png', caption: 'Mobile Layout' },
+    ],
+  },
 ];

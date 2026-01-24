@@ -16,7 +16,7 @@ const allProjects = () => {
               <ProjectRow key={project.id} project={project} />
             ))}
 
-            {/* Bottom border */}
+            
             <div className='border-black'></div>
           </div>
         </div>
